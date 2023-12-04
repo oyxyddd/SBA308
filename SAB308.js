@@ -8,7 +8,6 @@ function getLearnerData(CourseInfo, AssignmentGroup,LearnerSubmissions){
     const AllAssignments = AssignmentGroup.assignments;
 
     LearnerSubmissions.forEach((submission,index) => {
-    console.log(`this is ${index} submission`);
     // step 1: get the corresponding assignment for this submission  
     const assignment = findAssignment(submission,AllAssignments);
 
@@ -31,9 +30,13 @@ function getLearnerData(CourseInfo, AssignmentGroup,LearnerSubmissions){
         if(assignment.points_possible <= 0){
             throw new Error("Assignement possible score is 0")
         }else{
+            if( typeof submission.submission.score === 'number' && typeof assignment.points_possible === 'number'){
             learner[submission.assignment_id] = (submission.submission.score / assignment.points_possible).toFixed(2);
             learner.total_score += submission.submission.score;
             learner.total_possible += assignment.points_possible;
+        }else{
+            throw new Error("Submission score or possible points data are not number")
+        }
         }
     }
 });
