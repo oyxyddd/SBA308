@@ -7,7 +7,7 @@ function getLearnerData(CourseInfo, AssignmentGroup,LearnerSubmissions){
     const LearnerResult = [];
     const AllAssignments = AssignmentGroup.assignments;
 
-    LearnerSubmissions.forEach((submission,index) => {
+    LearnerSubmissions.forEach((submission) => {
     // step 1: get the corresponding assignment for this submission  
     const assignment = findAssignment(submission,AllAssignments);
 
@@ -23,8 +23,6 @@ function getLearnerData(CourseInfo, AssignmentGroup,LearnerSubmissions){
        
         // check wether learner object already exists, if not creat a new one
         const learner = findLearner(submission.learner_id, LearnerResult);
-        // console.log(learner)
-
 
         // calculate the score for each submission, return error if the possible score is 0
         if(assignment.points_possible <= 0){
@@ -86,8 +84,8 @@ const CourseInfo = {
     name: "Introduction to JavaScript"
   };
   
-  // The provided assignment group.
-  const AssignmentGroup = {
+// The provided assignment group.
+const AssignmentGroup = {
     id: 12345,
     name: "Fundamentals of JavaScript",
     course_id: 451,
@@ -112,10 +110,10 @@ const CourseInfo = {
         points_possible: 500
       }
     ]
-  };
+};
   
-  // The provided learner submission data.
-  const LearnerSubmissions = [
+// The provided learner submission data.
+ const LearnerSubmissions = [
     {
       learner_id: 125,
       assignment_id: 1,
