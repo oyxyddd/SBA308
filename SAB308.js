@@ -16,19 +16,22 @@ function getLearnerData(CourseInfo, AssignmentGroup,LearnerSubmissions){
     const today = new Date();
     //only include assignments whoes due date has past
     if(new Date(assignment.due_at) < today){
+        submittedDate = submission.submission.submitted_at;
         // check if the submitted date is past the due date, if yest then modify the score by substracting 10% of possible score from it
-        if (new Date(submission.submission.dumbitted_at) > new Date(assignment.due_at)){
+        if (new Date(submittedDate) > new Date(assignment.due_at)){
             submission.submission.score -= 0.1 * assignment.points_possible;
         }
        
         // check wether learner object already exists, if not creat a new one
-        const learner=findLearner(submission.id, LearnerResult);
+        const learner = findLearner(submission.learner_id, LearnerResult);
+        // console.log(learner)
+
 
         // calculate the score for each submission, return error if the possible score is 0
         if(assignment.points_possible <= 0){
             throw new Error("Assignement possible score is 0")
         }else{
-            learner[submission.assignment_id] = submission.submission.score / assignment.points_possible;
+            learner[submission.assignment_id] = (submission.submission.score / assignment.points_possible).toFixed(2);
             learner.total_score += submission.submission.score;
             learner.total_possible += assignment.points_possible;
         }
@@ -36,7 +39,7 @@ function getLearnerData(CourseInfo, AssignmentGroup,LearnerSubmissions){
 });
 
 LearnerResult.forEach((learner) =>{
-    learner.avg = learner.total_score / learner.total_possible;
+    learner.avg = (learner.total_score / learner.total_possible).toFixed(2);
     // delete learner.total_score;
     // delete learner.total_possible;
 }) ;
@@ -47,8 +50,8 @@ return LearnerResult;
 // Helper function for finding the corresponding assignment of each submission 
 function findAssignment(submission,AllAssignments) {
      for (const assignment of AllAssignments) {
-        console.log(assignment.id)
-        console.log(submission.assignment_id)
+        // console.log(assignment.id)
+        // console.log(submission.assignment_id)
         if (assignment.id == submission.assignment_id){
             return assignment;
         }
@@ -62,20 +65,19 @@ function findLearner(id,LearnerArray){
         if(id == learner.id){
             return learner;
         }else{
-            const newLearner = {
-                id : id,
-                total_score : 0,
-                total_possible : 0,
-            }
+            const newLearner = new Object;
+            newLearner.id = id;
+            newLearner.total_score = 0;
+            newLearner.total_possible = 0;
+            LearnerArray.push(newLearner);
             return newLearner;
-        }
-    }} else{
-        const newLearner = {
-            id : id,
-            total_score : 0,
-            total_possible : 0,
-        }
-        return newLearner;
+        }}} else{
+        const newLearner = new Object;
+            newLearner.id = id;
+            newLearner.total_score = 0;
+            newLearner.total_possible = 0;
+            LearnerArray.push(newLearner);
+            return newLearner;
     }
 }
 
