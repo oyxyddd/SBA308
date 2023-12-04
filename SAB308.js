@@ -40,8 +40,8 @@ function getLearnerData(CourseInfo, AssignmentGroup,LearnerSubmissions){
 
 LearnerResult.forEach((learner) =>{
     learner.avg = (learner.total_score / learner.total_possible).toFixed(2);
-    // delete learner.total_score;
-    // delete learner.total_possible;
+    delete learner.total_score;
+    delete learner.total_possible;
 }) ;
 
 return LearnerResult;
@@ -60,7 +60,7 @@ function findAssignment(submission,AllAssignments) {
    } 
 
 function findLearner(id,LearnerArray){
-    if (LearnerArray.length > 0){
+
         for (const learner of LearnerArray){
             if(id == learner.id){
                 return learner;
@@ -71,14 +71,6 @@ function findLearner(id,LearnerArray){
         newLearner.total_possible = 0;
         LearnerArray.push(newLearner);
         return newLearner; 
-    } else{
-        const newLearner = new Object;
-            newLearner.id = id;
-            newLearner.total_score = 0;
-            newLearner.total_possible = 0;
-            LearnerArray.push(newLearner);
-            return newLearner;
-    }
 }
 
 }
