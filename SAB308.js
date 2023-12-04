@@ -62,16 +62,16 @@ function findAssignment(submission,AllAssignments) {
 function findLearner(id,LearnerArray){
     if (LearnerArray.length > 0){
         for (const learner of LearnerArray){
-        if(id == learner.id){
-            return learner;
-        }else{
-            const newLearner = new Object;
-            newLearner.id = id;
-            newLearner.total_score = 0;
-            newLearner.total_possible = 0;
-            LearnerArray.push(newLearner);
-            return newLearner;
-        }}} else{
+            if(id == learner.id){
+                return learner;
+        }}
+        const newLearner = new Object;
+        newLearner.id = id;
+        newLearner.total_score = 0;
+        newLearner.total_possible = 0;
+        LearnerArray.push(newLearner);
+        return newLearner; 
+    } else{
         const newLearner = new Object;
             newLearner.id = id;
             newLearner.total_score = 0;
